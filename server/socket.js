@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 const socketio = require('socket.io');
 const messages = require('./controllers/messageController')
 
@@ -33,6 +34,31 @@ const socketConnection = (server) => {
             console.log('Socket disconnected from the server', socket.id);
         });
     });
+=======
+const socketIo = require('socket.io');
+
+const socketConnection = (server) => {
+  const io = socketIo(server, {
+    cors: {
+      origin: "http://localhost:3000",
+      methods: ["GET", "POST"],
+      credentials: true
+    }
+  });
+
+  io.on('connection', (socket) => {
+    console.log('New client connected');
+
+    socket.on('message', (message) => {
+      console.log(`Received message: ${message}`);
+      socket.emit('response', `You said: ${message}`);
+    });
+
+    socket.on('disconnect', () => {
+      console.log('Client disconnected');
+    });
+  });
+>>>>>>> 7ee871d63b560feec2c87a18202b08a427c13e74
 };
 
 module.exports = socketConnection;
